@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Moja mapa podróży</title>
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      padding: 12px;
+      background: #111;
+      color: white;
+      text-align: center;
+    }
+
+    #map {
+      height: calc(100vh - 50px);
+      width: 100%;
+    }
+
+    .popup-img {
+      width: 200px;
+      border-radius: 10px;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  🌍 Moja mapa odwiedzonych miejsc
+</header>
+
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+  // Inicjalizacja mapy
+  const map = L.map('map').setView([48.5, 14.5], 4);
+
+  // Mapa bazowa
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap'
+  }).addTo(map);
+
+  // Twoje miejsca
+  const places = [
+    {
+      name: "Barcelona",
+      desc: "Super miasto nad morzem 🌊",
+      coords: [41.3851, 2.1734],
+      img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Sagrada_Familia_8-12-21.jpg/320px-Sagrada_Familia_8-12-21.jpg"
+    },
+    {
+      name: "Kraków",
+      desc: "Piękne stare miasto 🏰",
+      coords: [50.0647, 19.9450],
+      img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Wawel_Castle_Krakow.jpg/320px-Wawel_Castle_Krakow.jpg"
+    },
+    {
+      name: "Rzym",
+      desc: "Wieczne miasto 🇮🇹",
+      coords: [41.9028, 12.4964],
+      img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Colosseo_2020.jpg/320px-Colosseo_2020.jpg"
+    }
+  ];
+
+  // Dodawanie pinezek
+  places.forEach(place => {
+    L.marker(place.coords)
+      .addTo(map)
+      .bindPopup(`
+        <h3>${place.name}</h3>
+        <p>${place.desc}</p>
+        <img class="popup-img" src="${place.img}" />
+      `);
+  });
+</script>
+
+</body>
+</html>
